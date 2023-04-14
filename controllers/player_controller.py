@@ -10,7 +10,7 @@ class CreatePlayerController:
     """Enter all the player's details, then add the player in the database"""
     def __init__(self):
         self.player_values = []
-        self.player_keys = ["Nom", "Prénom", "Date de naissance", "Sexe", "Classement", "FFE ID"]
+        self.player_keys = ["Nom", "Prénom", "Date de naissance", "Sexe", "Classement"]
         self.home_menu_controller = main_control.HomeMenuController()
 
     def __call__(self):
@@ -20,7 +20,6 @@ class CreatePlayerController:
         self.player_values.append(self.add_birth_details())
         self.player_values.append(self.add_gender())
         self.player_values.append(self.add_ranking())
-        self.player_values.append(self.add_ffe_id())
         if self.validate_player():
             self.player_model.add_to_database(self.player_values)
         self.player_values.clear()
@@ -81,17 +80,6 @@ class CreatePlayerController:
             else:
                 print("Vous devez entrer un nombre entier positif")
         return int(ranking)
-
-    def add_ffe_id(self):
-        # ffe id example: AB12345
-        valid_ffe_id = False
-        while not valid_ffe_id:
-            ffe_id = input("Entrez l'ID FFE du joueur: ")
-            if len(ffe_id) == 7 and ffe_id[0:2].isalpha() and ffe_id[2:].isdigit():
-                valid_ffe_id = True
-            else:
-                print("Vous devez entrer un ID FFE valide (AB12345)")
-        return ffe_id
 
     def validate_player(self):
         view_main.FrameDisplay.display_datas_in_a_frame(self.player_values, self.player_keys)

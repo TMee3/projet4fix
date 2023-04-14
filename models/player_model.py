@@ -16,7 +16,6 @@ class Player:
                  birthdate=None,
                  gender=None,
                  ranking=None,
-                 ffe_id=None,
                  tournament_score=0,
                  player_id=0
                  ):
@@ -25,7 +24,6 @@ class Player:
         self.birthdate = birthdate
         self.gender = gender
         self.ranking = ranking
-        self.ffe_id = ffe_id
         self.tournament_score = tournament_score
         self.player_id = player_id
 
@@ -36,7 +34,6 @@ class Player:
         player_infos['Date de naissance'] = self.birthdate
         player_infos['Sexe'] = self.gender
         player_infos['Classement'] = self.ranking
-        player_infos['FFE_id'] = self.ffe_id
         player_infos['Score'] = self.tournament_score
         player_infos['Id du joueur'] = self.player_id
         return player_infos
@@ -47,7 +44,6 @@ class Player:
         birthdate = serialized_player["Date de naissance"]
         gender = serialized_player["Sexe"]
         ranking = serialized_player["Classement"]
-        ffe_id = serialized_player["FFE_id"]
         tournament_score = serialized_player["Score"]
         player_id = serialized_player["Id du joueur"]
         return Player(last_name,
@@ -55,7 +51,6 @@ class Player:
                       birthdate,
                       gender,
                       ranking,
-                      ffe_id,
                       tournament_score,
                       player_id
                       )
