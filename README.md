@@ -25,23 +25,25 @@ Sur Mac, pressez ```touche command + espace``` et entrez ```terminal```.
 Sur Linux, vous pouvez ouviri un terminal en pressant les touches ```Ctrl + Alt + T```.
 
 1. Assurez-vous que vous utilisez une version de Python qui prend en charge venv. Les versions de Python 3.3 et supérieures incluent le module venv par défaut.
-2. Ouvrez une invite de commande et exécutez la commande suivante pour installer le module venv : 
+2. Ouvrez une invite de commande et exécutez la commande suivante pour installer le module venv :
 
 ```python -m pip install --user virtualenv ```
-  Cela installera le module venv dans votre environnement Python.
+Cela installera le module venv dans votre environnement Python.
 3. Après avoir installé venv, vous pouvez créer un environnement virtuel en exécutant la commande suivante :
 
 
-```python -m venv myenv ``` 
+```python -m venv myenv ```
 Cela créera un nouvel environnement virtuel nommé "myenv".
-4. Activez l'environnement virtuel en exécutant la commande suivante :  ``````
+4. Activez l'environnement virtuel en exécutant la commande suivante :
+
+```source myenv/bin/activate ```
 
 
 Le programme utilise plusieurs librairies externes, et modules de Python, qui sont repertoriés dans le fichier ```requirements.txt```
 dans le terminal, puis entrez la commande :
 
 ```bash
-
+ pip install -r requirements.txt
 ```
 afin d'installer toutes les librairies.
 
