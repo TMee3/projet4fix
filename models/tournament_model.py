@@ -89,7 +89,6 @@ class Tour:
     générer les paires suivantes.
     Les instances de tour doivent être stockées dans une liste sur l'instance
     de tournoi à laquelle elles appartiennent.
-    ---
     Renvoi l'instance de tour
     """
 
