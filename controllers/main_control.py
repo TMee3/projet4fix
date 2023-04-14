@@ -32,6 +32,7 @@ class HomeMenuController:
 
 
 class PlayerMenuController(HomeMenuController):
+    """Display the player menu and leads to the different options"""
 
     def __init__(self):
         super().__init__()
@@ -66,6 +67,7 @@ class PlayerMenuController(HomeMenuController):
 
 
 class TournamentMenuController(HomeMenuController):
+    """Display the tournament menu and leads to the different options"""
     def __init__(self):
         super().__init__()
         self.tournament_report_controller = tournament_controller.TournamentReport()

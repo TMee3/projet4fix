@@ -37,6 +37,7 @@ class CreateTournamentController:
         self.home_menu_controller()
 
     def add_tournament_name(self):
+        """Enter the tournament's name"""
         valid_tournament_name = False
         while not valid_tournament_name:
             tournament_name = input("Entrez le nom du tournoi: ")
@@ -47,6 +48,7 @@ class CreateTournamentController:
         return tournament_name
 
     def add_location(self):
+        """Enter the tournament's location"""
         valid_location = False
         while not valid_location:
             location = input("Entrez l'endroit où se déroule le tournoi: ")
@@ -57,6 +59,7 @@ class CreateTournamentController:
         return location
 
     def add_tournament_date(self):
+        """Enter the tournament's date"""
         valid_date = False
         while not valid_date:
             tournament_date = input("Entrez la date du tournoi (jj/mm/aaaa): ")
@@ -67,12 +70,14 @@ class CreateTournamentController:
         return tournament_date
 
     def add_number_of_rounds(self):
+        """Enter the number of rounds"""
         number_of_rounds = 4
         print(
             "Le nombre de rounds est de 4 par défaut\n"
             "Souhaitez-vous changer ce nombre ?")
 
         while True:
+            # Ask the user if he wants to change the number of rounds
             print("Entrer 'Y' pour changer, ou 'N' pour continuer")
             choice = input("--> ")
             if choice == "Y":
@@ -87,6 +92,7 @@ class CreateTournamentController:
         return number_of_rounds
 
     def add_time_control(self):
+        """Enter the time control"""
         print("Choisissez le contrôle du temps:")
         time_control = None
         entry = self.create_menu(self.create_menu.time_control_menu)
@@ -99,11 +105,13 @@ class CreateTournamentController:
         return time_control
 
     def add_description(self):
+        """Enter a description of the tournament"""
         description = input("Entrer une description au tournoi :\n"
                             "-->")
         return description
 
     def add_players_to_tournament(self):
+        """Add players to the tournament"""
         """Add the ids of the selected players in a list, en return the list"""
         view_main.ClearScreen()
 
@@ -119,7 +127,7 @@ class CreateTournamentController:
                 return
             else:
                 print("Appuyez sur 'Y' ou 'N'")
-
+        # Display the players database and ask the user to choose players
         display_players_database = pd.read_json("models/players.json")
         print(display_players_database)
         print()
@@ -130,6 +138,7 @@ class CreateTournamentController:
         print("Entrez les numéros des joueurs séparés par des virgules :")
 
         valid_ids = False
+        """Ask the user to enter the ids of the players he wants to add to the tournament"""
         while not valid_ids:
             id_choices = input("--> ").split(',')
             id_choices = [id_choice.strip() for id_choice in id_choices]
@@ -137,6 +146,7 @@ class CreateTournamentController:
                 id_choices = [int(id_choice) for id_choice in id_choices]
 
             except ValueError:
+                """If the user enters a string instead of an int, the program will ask him to enter the ids again"""
                 print("Vous devez entrer des nombres entiers séparés par des virgules")
             else:
                 if any(id_choice <= 0 or id_choice > len(player_model.player_database) for id_choice in id_choices):
@@ -155,7 +165,6 @@ class CreateTournamentController:
             print(f"Le joueur {id_choice} a été ajouté au tournoi")
 
         print("Joueurs dans le tournoi : " + str(self.players_ids))
-
         self.players_serialized = [player_model.player_database.get(doc_id=id) for id in self.players_ids]
         self.players_serialized.sort(key=itemgetter("Classement"), reverse=True)
         self.players_ids = [player.doc_id for player in self.players_serialized]
@@ -195,6 +204,7 @@ class StartTournament:
         self.home_menu_controller()
 
     def save_tournament_statement(self, tournament_object):
+        """Save the tournament statement in the database"""
         self.home_menu_controller = main_control.HomeMenuController()
         db_tournament = tournament_model.tournament_database
         tours_table = db_tournament.table("tours")
@@ -265,6 +275,7 @@ class StartTournament:
         self.home_menu_controller()
 
     def select_a_tournament(self):
+        """Ask to choose a tournament and return an instance of tournament"""
         self.tournament = tournament_model.Tournament()
         self.display_tournaments = view_main.TournamentDisplay()
         self.home_menu_controller = main_control.HomeMenuController()

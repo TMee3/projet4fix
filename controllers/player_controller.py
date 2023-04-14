@@ -72,6 +72,7 @@ class CreatePlayerController:
         return validated_gender
 
     def add_ranking(self):
+        """Ask for the player's ranking and validate it"""
         valid_ranking = False
         while not valid_ranking:
             ranking = input("Entrez le classement du joueur: ")
@@ -82,6 +83,7 @@ class CreatePlayerController:
         return int(ranking)
 
     def validate_player(self):
+        """Display the player's details and ask for validation"""
         view_main.FrameDisplay.display_datas_in_a_frame(self.player_values, self.player_keys)
 
         valid_player = False
@@ -98,7 +100,7 @@ class CreatePlayerController:
 
 
 class PlayerReport:
-    """Display the players reports"""
+    """Display the players reports menu and call the appropriate method"""
 
     def __call__(self):
         self.create_menu = create_menus.CreateMenus()
