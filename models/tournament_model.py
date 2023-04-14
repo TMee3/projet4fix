@@ -7,6 +7,7 @@ tournament_database = TinyDB('models/tournament.json')
 
 
 class Tournament:
+    """Use to create an instance of a tournament"""
     def __init__(self, tournament_name=None,
                  location=None,
                  tournament_date=None,
@@ -68,20 +69,16 @@ class Tournament:
                           )
 
     def add_to_database(self, tournament_values):
-        tournament = Tournament(
-            tournament_values[0],
-            tournament_values[1],
-            tournament_values[2],
-            tournament_values[3],
-            tournament_values[4],
-            tournament_values[5],
-            tournament_values[6]
-        )
+        tournament = Tournament(tournament_values[0],
+                                tournament_values[1],
+                                tournament_values[2],
+                                tournament_values[3],
+                                tournament_values[4],
+                                tournament_values[5],
+                                tournament_values[6],
+                                )
         tournament_id = tournament_database.insert(tournament.serialized())
-        tournament_database.update(
-            {"Id du tournoi": tournament_id},
-            doc_ids=[tournament_id]
-        )
+        tournament_database.update({"Id du tournoi": tournament_id}, doc_ids=[tournament_id])
 
 
 class Tour:
@@ -92,6 +89,7 @@ class Tour:
     générer les paires suivantes.
     Les instances de tour doivent être stockées dans une liste sur l'instance
     de tournoi à laquelle elles appartiennent.
+    ---
     Renvoi l'instance de tour
     """
 
@@ -130,38 +128,48 @@ class Tour:
         self.view = view_main.TourDisplay()
         self.list_of_tours = []
         self.list_of_finished_matchs = []
-        self.name = f"Tour {len(tournament_object.list_of_tours) + 1}"
+        self.name = "Tour " + str(len(tournament_object.list_of_tours) + 1)
         # Tour.TOUR_NUMBER += 1
 
         self.begin_time, self.end_time = self.view.display_tournament_time()
 
-        # Ajoute des instances de 'match' dans la liste 'list_of_tours'
-        self.list_of_tours = [Match(self.name, sorted_players_list[i], sorted_players_list[i+1])
-                            for i in range(0, len(sorted_players_list), 2)]
+        # tant qu'il y a des joueurs dans la liste, ajoute des instances de 'match' dans la liste 'list_of_tours'
+        while len(sorted_players_list) > 0:
+            match_instance = Match(self.name, sorted_players_list[0], sorted_players_list[1])
+            Match.MATCH_NUMBER += 1
+            self.list_of_tours.append(match_instance)
+            del sorted_players_list[0:2]
 
         self.view.display_tour(self.name, self.list_of_tours)
 
         for match in self.list_of_tours:
-            while True:
-                score_player_1 = input(f"Entrez le score de {match.player_1} :")
-                if score_player_1 in ["0", "0.5", "1"]:
+
+            valid_score_player_1 = False
+            while not valid_score_player_1:
+                try:
+                    score_player_1 = input(f"Entrez le score de {match.player_1} :")
+                    float(score_player_1)
+                except Exception:
+                    print("Vous devez entrer 0, 0.5, ou 1")
+                else:
                     match.score_player_1 = float(score_player_1)
                     match.player_1.tournament_score += float(score_player_1)
-                    break
-                else:
-                    print("Vous devez entrer 0, 0.5, ou 1")
+                    valid_score_player_1 = True
 
-            while True:
-                score_player_2 = input(f"Entrez le score de {match.player_2} :")
-                if score_player_2 in ["0", "0.5", "1"]:
+            valid_score_player_2 = False
+            while not valid_score_player_2:
+                try:
+                    score_player_2 = input(f"Entrez le score de {match.player_2} :")
+                    float(score_player_2)
+                except Exception:
+                    print("Vous devez entrer 0, 0.5, ou 1")
+                else:
                     match.score_player_2 = float(score_player_2)
                     match.player_2.tournament_score += float(score_player_2)
-                    break
-                else:
-                    print("Vous devez entrer 0, 0.5, ou 1")
+                    valid_score_player_2 = True
 
             self.list_of_finished_matchs.append(([match.player_1.player_id, match.score_player_1],
-                                                [match.player_2.player_id, match.score_player_2]))
+                                                 [match.player_2.player_id, match.score_player_2]))
 
         return Tour(self.name, self.begin_time, self.end_time, self.list_of_finished_matchs)
 
