@@ -68,7 +68,8 @@ class CreateTournamentController:
 
     def add_number_of_rounds(self):
         number_of_rounds = 4
-        print("Le nombre de rounds est de 4 par défaut\n"
+        print(
+            "Le nombre de rounds est de 4 par défaut\n"
             "Souhaitez-vous changer ce nombre ?")
 
         while True:
@@ -108,8 +109,10 @@ class CreateTournamentController:
 
         valid_add_player_choice = False
         while not valid_add_player_choice:
-            add_player_choice = input("\nVoulez-vous ajouter des joueurs ?\n\n"
-                                    "Appuyer sur 'Y' pour confirmer, ou 'N' pour poursuivre")
+            add_player_choice = input(
+                "\nVoulez-vous ajouter des joueurs ?\n\n"
+                "Appuyez sur 'Y' pour confirmer, ou 'N' pour poursuivre : "
+                )
             if add_player_choice == "Y":
                 valid_add_player_choice = True
             elif add_player_choice == "N":
@@ -290,7 +293,8 @@ class StartTournament:
     def sort_player_first_tour(self, tournament):
         """ retourne une liste de joueurs triée par classement """
         self.player = player_model.Player()
-        players_instances = [self.player.unserialized(player_model.player_database.get(doc_id=id)) for id in tournament.players_ids]
+        players_instances = [self.player.unserialized(player_model.player_database.get(doc_id=id))
+                             for id in tournament.players_ids]
         sorted_players = []
 
         for i, player in enumerate(players_instances):
